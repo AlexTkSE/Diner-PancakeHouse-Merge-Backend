@@ -37,6 +37,9 @@ public class PancakeHouseMenu {
         menuItems.add(menuItem);
     }
 
+    public Iterator createIterator(){
+        return new PancakeHouseMenuIterator(menuItems);
+    }
     public List<MenuItem> getMenuItems() {
         return menuItems;
     }
@@ -45,8 +48,11 @@ public class PancakeHouseMenu {
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(MenuItem item: getMenuItems()) {
-            stringBuilder.append(item.toString());
+        Iterator iterator = createIterator();
+
+        while (iterator.hasNext()){
+            MenuItem i = (MenuItem) iterator.next();
+            stringBuilder.append(i.toString());
         }
         return  stringBuilder.toString();
     }
