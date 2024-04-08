@@ -8,6 +8,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -22,6 +24,12 @@ public class PancakeHouseController {
 
     @GetMapping
     public List<MenuItem> get() {
-        return repository.getTheMenu();
+        Iterator<MenuItem> iterator = repository.getTheMenuIterator();
+
+        List<MenuItem> i = new ArrayList<>();
+        while(iterator.hasNext()) {
+            i.add(iterator.next());
+        }
+        return i;
     }
 }
