@@ -1,7 +1,7 @@
 package edu.iu.habahram.DinerPancakeHouseMerge.controllers;
 
-
 import edu.iu.habahram.DinerPancakeHouseMerge.model.MenuItem;
+import edu.iu.habahram.DinerPancakeHouseMerge.repository.CafeRepository;
 import edu.iu.habahram.DinerPancakeHouseMerge.repository.DinerRepository;
 import edu.iu.habahram.DinerPancakeHouseMerge.repository.PancakeHouseRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 @RestController
@@ -20,24 +21,33 @@ public class MergerController {
     DinerRepository dinerRepository;
     PancakeHouseRepository pancakeHouseRepository;
 
-    public MergerController(PancakeHouseRepository pancakeHouseRepository, DinerRepository dinerRepository){
-        this.pancakeHouseRepository = pancakeHouseRepository;
+    CafeRepository cafeRepository;
+
+    public MergerController(DinerRepository dinerRepository, PancakeHouseRepository pancakeHouseRepository,
+                            CafeRepository cafeRepository) {
         this.dinerRepository = dinerRepository;
+        this.pancakeHouseRepository = pancakeHouseRepository;
+        this.cafeRepository = cafeRepository;
     }
 
     @GetMapping
-    public List<MenuItem> get(){
-        List<MenuItem> pancakeHouseMenu = pancakeHouseRepository.getTheMenu();
-        MenuItem[] dinerMenu = dinerRepository.getTheMenu();
-
-        List<MenuItem> splitMenu = new ArrayList<>();
-        for (MenuItem i : pancakeHouseMenu){
-            splitMenu.add(i);
+    public List<MenuItem> get() {
+        List<MenuItem> menuItems = new ArrayList<>();
+        Iterator<MenuItem> lunchItems = dinerRepository.getTheMenuIterator();
+        while(lunchItems.hasNext()) {
+            menuItems.add(lunchItems.next());
         }
 
-        for (MenuItem i : dinerMenu){
-            splitMenu.add(i);
+        Iterator<MenuItem> breakfastItems = pancakeHouseRepository.getTheMenuIterator();
+        while(breakfastItems.hasNext()) {
+            menuItems.add(breakfastItems.next());
         }
-        return splitMenu;
+
+        Iterator<MenuItem> cafeItems = cafeRepository.getTheMenuIterator();
+        while(cafeItems.hasNext()) {
+            menuItems.add(cafeItems.next());
+        }
+
+        return menuItems;
     }
 }
