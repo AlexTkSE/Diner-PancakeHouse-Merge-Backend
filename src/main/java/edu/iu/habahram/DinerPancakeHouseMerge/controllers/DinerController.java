@@ -7,6 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping("/diner")
@@ -20,6 +24,11 @@ public class DinerController {
 
     @GetMapping
     public MenuItem[] get() {
-        return repository.getTheMenu();
+        Iterator<MenuItem> iterator = repository.getTheMenuIterator();
+        List<MenuItem> items = new ArrayList<>();
+        while(iterator.hasNext()) {
+            items.add(iterator.next());
+        }
+        return items.toArray(new MenuItem[0]);
     }
 }
