@@ -1,12 +1,13 @@
 package edu.iu.habahram.DinerPancakeHouseMerge.model;
 
-public class DinerMenu {
+import java.util.Iterator;
+
+public class DinerMenu extends Menu{
     static final int MAX_ITEMS = 6;
     int numberOfItems = 0;
-    MenuItem[] menuItems;
 
-    public DinerMenu() {
-        menuItems = new MenuItem[MAX_ITEMS];
+    public DinerMenu(String name, String description) {
+        super(name, description);
 
         addItem("Vegetarian BLT",
                 "(Fakin') Bacon with lettuce & tomato on whole wheat", true, 2.99);
@@ -27,26 +28,19 @@ public class DinerMenu {
     public void addItem(String name, String description,
                         boolean vegetarian, double price)
     {
-        MenuItem menuItem = new MenuItem(name, description, vegetarian, price);
         if (numberOfItems >= MAX_ITEMS) {
-            System.err.println("Sorry, menu is full!  Can't add item to menu");
+            System.err.println("Sorry, menu is full! Can't add item to menu");
         } else {
-            menuItems[numberOfItems] = menuItem;
-            numberOfItems = numberOfItems + 1;
+            MenuItem menuItem = new MenuItem(name, description, vegetarian, price);
+            add(menuItem); 
+            numberOfItems++;
         }
     }
 
-    public MenuItem[] getMenuItems() {
-        return menuItems;
+    @Override
+    public Iterator<MenuComponent> createIterator() {
+        return new CompositeIterator(menuComponents.iterator());
     }
 
-    public String toString() {
-        StringBuilder stringBuilder = new StringBuilder();
-        for(MenuItem item: getMenuItems()) {
-            stringBuilder.append(item.toString());
-        }
-        return  stringBuilder.toString();
-    }
-
-      // other menu methods here
+    // other menu methods here
 }
