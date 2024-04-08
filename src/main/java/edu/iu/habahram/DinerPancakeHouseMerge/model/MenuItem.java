@@ -41,11 +41,3 @@ public class MenuItem extends MenuComponent{
         return items;
     }
 }
-
-    public boolean isVegetarian() {
-        return vegetarian;
-    }
-    public String toString() {
-        return (name + ", $" + price + "\n   " + description);
-    }
-}
