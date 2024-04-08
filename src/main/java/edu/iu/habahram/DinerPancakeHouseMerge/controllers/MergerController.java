@@ -1,43 +1,52 @@
 package edu.iu.habahram.DinerPancakeHouseMerge.controllers;
 
-
-import edu.iu.habahram.DinerPancakeHouseMerge.model.MenuItem;
-import edu.iu.habahram.DinerPancakeHouseMerge.repository.DinerRepository;
-import edu.iu.habahram.DinerPancakeHouseMerge.repository.PancakeHouseRepository;
+import edu.iu.habahram.DinerPancakeHouseMerge.model.MenuItemRecord;
+import edu.iu.habahram.DinerPancakeHouseMerge.repository.MergerRepository;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 @CrossOrigin
-@RequestMapping("/merger")
+@RequestMapping("/")
 public class MergerController {
 
-    DinerRepository dinerRepository;
-    PancakeHouseRepository pancakeHouseRepository;
+    MergerRepository mergerRepository;
 
-    public MergerController(PancakeHouseRepository pancakeHouseRepository, DinerRepository dinerRepository){
-        this.pancakeHouseRepository = pancakeHouseRepository;
-        this.dinerRepository = dinerRepository;
+    public MergerController(MergerRepository mergerRepository) {
+        this.mergerRepository = mergerRepository;
     }
 
-    @GetMapping
-    public List<MenuItem> get(){
-        List<MenuItem> pancakeHouseMenu = pancakeHouseRepository.getTheMenu();
-        MenuItem[] dinerMenu = dinerRepository.getTheMenu();
+    @GetMapping("/merger")
+    public List<MenuItemRecord> get() {
+        List<MenuItemRecord> i = mergerRepository.getTheMenuItems();
+        return i;
+    }
 
-        List<MenuItem> splitMenu = new ArrayList<>();
-        for (MenuItem i : pancakeHouseMenu){
-            splitMenu.add(i);
-        }
+    @GetMapping("/vegetarian")
+    public List<MenuItemRecord> getVegetarian() {
+        List<MenuItemRecord> i = mergerRepository.getVegetarianMenuItems();
+        return i;
+    }
 
-        for (MenuItem i : dinerMenu){
-            splitMenu.add(i);
-        }
-        return splitMenu;
+    @GetMapping("/breakfast")
+    public List<MenuItemRecord> getBreakfast() {
+        List<MenuItemRecord> i = mergerRepository.getBreakfastMenuItems();
+        return i;
+    }
+
+    @GetMapping("/lunch")
+    public List<MenuItemRecord> getLunch() {
+        List<MenuItemRecord> i = mergerRepository.getLunchMenuItems();
+        return i;
+    }
+
+    @GetMapping("/supper")
+    public List<MenuItemRecord> getDinner() {
+        List<MenuItemRecord> i = mergerRepository.getDinnerMenuItems();
+        return i;
     }
 }
