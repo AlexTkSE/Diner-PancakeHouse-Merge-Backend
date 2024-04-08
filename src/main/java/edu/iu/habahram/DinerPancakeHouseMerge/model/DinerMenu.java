@@ -5,7 +5,7 @@ public class DinerMenu {
     int numberOfItems = 0;
     MenuItem[] menuItems;
 
-    public DinerMenu() {
+    public DinerMenu(){
         menuItems = new MenuItem[MAX_ITEMS];
 
         addItem("Vegetarian BLT",
@@ -36,17 +36,24 @@ public class DinerMenu {
         }
     }
 
+    public Iterator createIterator() {
+        return new DinerMenuIterator(menuItems);
+    }
+
     public MenuItem[] getMenuItems() {
         return menuItems;
     }
 
     public String toString() {
         StringBuilder stringBuilder = new StringBuilder();
-        for(MenuItem item: getMenuItems()) {
-            stringBuilder.append(item.toString());
+
+        Iterator iterator = createIterator();
+        while(iterator.hasNext()) {
+            MenuItem i = (MenuItem) iterator.next();
+            stringBuilder.append(i.toString());
         }
         return  stringBuilder.toString();
     }
 
-      // other menu methods here
+    // other menu methods here
 }
