@@ -4,13 +4,12 @@ import edu.iu.habahram.DinerPancakeHouseMerge.model.DinerMenu;
 import edu.iu.habahram.DinerPancakeHouseMerge.model.MenuItem;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Iterator;
 
 @Repository
 public class DinerRepository {
-
-    public MenuItem[] getTheMenu() {
+    public Iterator<MenuItem> getTheMenu() {
         DinerMenu dinerMenu = new DinerMenu();
-        return dinerMenu.getMenuItems();
+        return dinerMenu.createIterator();
     }
 }
